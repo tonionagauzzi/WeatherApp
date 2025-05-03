@@ -14,7 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.vitantonio.nagauzzi.whetherapp.ui.component.WeatherScreen
+import com.vitantonio.nagauzzi.whetherapp.ui.component.large.WeatherScreen
 import com.vitantonio.nagauzzi.whetherapp.ui.theme.WhetherAppTheme
 import com.vitantonio.nagauzzi.whetherapp.viewmodel.WeatherViewModel
 
