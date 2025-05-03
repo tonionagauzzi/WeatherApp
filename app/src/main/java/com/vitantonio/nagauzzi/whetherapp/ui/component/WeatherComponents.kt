@@ -44,6 +44,7 @@ fun WeatherScreen(
     selectedCity: String,
     availableCities: List<String>,
     onCitySelected: (String) -> Unit,
+    onRetryFetch: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -70,7 +71,7 @@ fun WeatherScreen(
         when (weatherState) {
             is WeatherUiState.Loading -> CircularProgressIndicator(modifier = Modifier.padding(16.dp))
             is WeatherUiState.Success -> WeatherCard(weather = weatherState.weather)
-            is WeatherUiState.Error -> ErrorMessage(message = weatherState.message)
+            is WeatherUiState.Error -> ErrorMessage(message = weatherState.message, onRetry = onRetryFetch)
         }
     }
 }
@@ -318,7 +319,11 @@ fun WeatherConditionIcon(condition: WeatherCondition, modifier: Modifier = Modif
  * エラーメッセージ表示
  */
 @Composable
-fun ErrorMessage(message: String, modifier: Modifier = Modifier) {
+fun ErrorMessage(
+    message: String,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
@@ -348,6 +353,17 @@ fun ErrorMessage(message: String, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        androidx.compose.material3.Button(
+            onClick = onRetry,
+            colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ) {
+            Text(text = "再試行")
+        }
     }
 }
 

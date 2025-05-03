@@ -8,7 +8,6 @@ import com.vitantonio.nagauzzi.whetherapp.repository.WeatherRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 /**
@@ -45,13 +44,11 @@ class WeatherViewModel(
     private fun fetchWeatherForSelectedCity() {
         _weatherState.value = WeatherUiState.Loading
         viewModelScope.launch {
-            repository.getWeatherForCity(_selectedCity.value)
-                .catch { error ->
-                    _weatherState.value = WeatherUiState.Error(error.message ?: "Unknown error")
-                }
-                .collect { weather ->
-                    _weatherState.value = WeatherUiState.Success(weather)
-                }
+            repository.getWeatherForCity(_selectedCity.value).onSuccess { weather ->
+                _weatherState.value = WeatherUiState.Success(weather)
+            }.onFailure { error ->
+                _weatherState.value = WeatherUiState.Error(error.message ?: "Unknown error")
+            }
         }
     }
 
@@ -62,6 +59,13 @@ class WeatherViewModel(
      */
     fun selectCity(cityName: String) {
         _selectedCity.value = cityName
+        fetchWeatherForSelectedCity()
+    }
+
+    /**
+     * 天気情報を再取得する
+     */
+    fun retryFetchWeather() {
         fetchWeatherForSelectedCity()
     }
 }

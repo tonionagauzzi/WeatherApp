@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
                         selectedCity = selectedCity,
                         availableCities = availableCities,
                         onCitySelected = viewModel::selectCity,
+                        onRetryFetch = viewModel::retryFetchWeather,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

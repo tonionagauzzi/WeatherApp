@@ -4,8 +4,6 @@ import com.vitantonio.nagauzzi.whetherapp.model.Location
 import com.vitantonio.nagauzzi.whetherapp.model.Weather
 import com.vitantonio.nagauzzi.whetherapp.model.WeatherCondition
 import com.vitantonio.nagauzzi.whetherapp.repository.api.NetworkModule
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlin.math.roundToInt
 
 /**
@@ -18,7 +16,7 @@ interface WeatherRepository {
      * @param cityName 都市名
      * @return 天気情報のFlow
      */
-    fun getWeatherForCity(cityName: String): Flow<Weather>
+    suspend fun getWeatherForCity(cityName: String): Result<Weather>
 
     /**
      * デフォルトの都市リストを取得する
@@ -30,41 +28,34 @@ class WeatherRepositoryImpl : WeatherRepository {
     private val geocodingService = NetworkModule.geocodingService
     private val openMeteoService = NetworkModule.openMeteoService
 
-    override fun getWeatherForCity(cityName: String): Flow<Weather> = flow {
-        try {
-            // 都市名から座標を取得
-            val location = getLocationFromCityName(cityName)
+    override suspend fun getWeatherForCity(cityName: String): Result<Weather> = runCatching {
+        // 都市名から座標を取得
+        val location = getLocationFromCityName(cityName)
 
-            // 座標から天気情報を取得（Open Meteo API）
-            val openMeteoResponse = openMeteoService.getWeather(
-                latitude = location.latitude,
-                longitude = location.longitude
-            )
+        // 座標から天気情報を取得（Open Meteo API）
+        val openMeteoResponse = openMeteoService.getWeather(
+            latitude = location.latitude,
+            longitude = location.longitude
+        )
 
-            // 現在の天気データを取得
-            val currentWeather = openMeteoResponse.current
-            val dailyWeather = openMeteoResponse.daily
+        // 現在の天気データを取得
+        val currentWeather = openMeteoResponse.current
+        val dailyWeather = openMeteoResponse.daily
 
-            // 天気コードから天気の状態を判定
-            val condition = WeatherCondition.fromOpenMeteoWeatherCode(currentWeather.weather_code)
+        // 天気コードから天気の状態を判定
+        val condition = WeatherCondition.fromOpenMeteoWeatherCode(currentWeather.weather_code)
 
-            // Weather オブジェクトを作成
-            val weather = Weather(
-                city = cityName,
-                temperature = currentWeather.temperature_2m.roundToInt(),
-                maxTemperature = dailyWeather.temperature_2m_max.first().roundToInt(),
-                minTemperature = dailyWeather.temperature_2m_min.first().roundToInt(),
-                condition = condition,
-                humidity = currentWeather.relative_humidity_2m,
-                windSpeed = currentWeather.wind_speed_10m,
-                rainfall = currentWeather.rain
-            )
-
-            emit(weather)
-        } catch (e: Exception) {
-            // エラー発生時はフェイクデータを返す
-            emit(getFakeWeather(cityName))
-        }
+        // Weather オブジェクトを作成
+        Weather(
+            city = cityName,
+            temperature = currentWeather.temperature_2m.roundToInt(),
+            maxTemperature = dailyWeather.temperature_2m_max.first().roundToInt(),
+            minTemperature = dailyWeather.temperature_2m_min.first().roundToInt(),
+            condition = condition,
+            humidity = currentWeather.relative_humidity_2m,
+            windSpeed = currentWeather.wind_speed_10m,
+            rainfall = currentWeather.rain
+        )
     }
 
     override fun getDefaultCities(): List<String> {
@@ -74,21 +65,20 @@ class WeatherRepositoryImpl : WeatherRepository {
     /**
      * 都市名から位置情報を取得する
      */
-    private suspend fun getLocationFromCityName(cityName: String): Location {
-        try {
-            val response = geocodingService.geocode(cityName)
-            val result = response.results.firstOrNull()
-                ?: throw Exception("位置情報が見つかりませんでした: $cityName")
-
-            return Location(
-                latitude = result.geometry.latitude,
-                longitude = result.geometry.longitude
-            )
-        } catch (e: Exception) {
-            // 位置情報を取得できない場合のデフォルト値
-            return getDefaultLocation(cityName)
+    private suspend fun getLocationFromCityName(cityName: String): Location = runCatching {
+        val response = geocodingService.geocode(cityName)
+        val result = response.results.first()
+        return Location(latitude = result.geometry.latitude, longitude = result.geometry.longitude)
+    }.fold(
+        onSuccess = { location ->
+            // 位置情報を取得できた場合はそのまま返す
+            location
+        },
+        onFailure = {
+            // 位置情報を取得できない場合はデフォルトの位置情報を返す
+            getDefaultLocation(cityName)
         }
-    }
+    )
 
     /**
      * 都市名に基づいたデフォルトの位置情報を返す
@@ -119,6 +109,7 @@ class WeatherRepositoryImpl : WeatherRepository {
                 windSpeed = 3.5,
                 rainfall = 0.0
             )
+
             "大阪" -> Weather(
                 city = "大阪",
                 temperature = 27,
@@ -129,6 +120,7 @@ class WeatherRepositoryImpl : WeatherRepository {
                 windSpeed = 4.0,
                 rainfall = 2.0
             )
+
             "札幌" -> Weather(
                 city = "札幌",
                 temperature = 15,
@@ -139,6 +131,7 @@ class WeatherRepositoryImpl : WeatherRepository {
                 windSpeed = 5.2,
                 rainfall = 5.5
             )
+
             "福岡" -> Weather(
                 city = "福岡",
                 temperature = 26,
@@ -149,6 +142,7 @@ class WeatherRepositoryImpl : WeatherRepository {
                 windSpeed = 3.0,
                 rainfall = 1.5
             )
+
             else -> {
                 val temp = (20..30).random()
                 val rain = if (Math.random() > 0.5) (0..50).random() / 10.0 else 0.0
