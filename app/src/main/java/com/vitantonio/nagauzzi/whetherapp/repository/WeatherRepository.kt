@@ -6,6 +6,7 @@ import com.vitantonio.nagauzzi.whetherapp.model.WeatherCondition
 import com.vitantonio.nagauzzi.whetherapp.repository.api.NetworkModule
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.math.roundToInt
 
 /**
  * 天気情報を提供するリポジトリ
@@ -27,48 +28,36 @@ interface WeatherRepository {
 
 class WeatherRepositoryImpl : WeatherRepository {
     private val geocodingService = NetworkModule.geocodingService
-    private val yahooWeatherService = NetworkModule.yahooWeatherService
+    private val openMeteoService = NetworkModule.openMeteoService
 
     override fun getWeatherForCity(cityName: String): Flow<Weather> = flow {
         try {
             // 都市名から座標を取得
             val location = getLocationFromCityName(cityName)
 
-            // 座標から天気情報を取得
-            // Yahoo!気象情報APIに必要な形式（経度,緯度）に変換
-            val coordinates = "${location.longitude},${location.latitude}"
-            val yahooResponse = yahooWeatherService.getWeather(coordinates = coordinates)
-
-            // レスポンスのチェック
-            if (yahooResponse.resultInfo.status != "200" || yahooResponse.features.isEmpty()) {
-                throw Exception("天気情報の取得に失敗しました")
-            }
+            // 座標から天気情報を取得（Open Meteo API）
+            val openMeteoResponse = openMeteoService.getWeather(
+                latitude = location.latitude,
+                longitude = location.longitude
+            )
 
             // 現在の天気データを取得
-            val feature = yahooResponse.features[0]
-            val currentWeather = feature.property.weatherList.weather.firstOrNull { it.type == "observation" }
-                ?: throw Exception("現在の天気データが取得できませんでした")
+            val currentWeather = openMeteoResponse.current
+            val dailyWeather = openMeteoResponse.daily
 
-            // 降水強度から天気の状態を判定
-            val rainfall = currentWeather.rainfall
-            val condition = WeatherCondition.fromYahooRainfall(rainfall)
-
-            // 雨量から簡易的に温度と湿度を推定（実際のAPIでは温度・湿度データは提供されていないため）
-            // 実際のアプリでは、別のAPIから温度や湿度を取得することをお勧めします
-            val temperature = estimateTemperature(cityName, rainfall)
-            val humidity = estimateHumidity(rainfall)
-            val windSpeed = estimateWindSpeed(rainfall)
+            // 天気コードから天気の状態を判定
+            val condition = WeatherCondition.fromOpenMeteoWeatherCode(currentWeather.weather_code)
 
             // Weather オブジェクトを作成
             val weather = Weather(
                 city = cityName,
-                temperature = temperature,
-                maxTemperature = (temperature * 1.1).toInt(),
-                minTemperature = (temperature * 0.9).toInt(),
+                temperature = currentWeather.temperature_2m.roundToInt(),
+                maxTemperature = dailyWeather.temperature_2m_max.first().roundToInt(),
+                minTemperature = dailyWeather.temperature_2m_min.first().roundToInt(),
                 condition = condition,
-                humidity = humidity,
-                windSpeed = windSpeed,
-                rainfall = rainfall
+                humidity = currentWeather.relative_humidity_2m,
+                windSpeed = currentWeather.wind_speed_10m,
+                rainfall = currentWeather.rain
             )
 
             emit(weather)
@@ -80,58 +69,6 @@ class WeatherRepositoryImpl : WeatherRepository {
 
     override fun getDefaultCities(): List<String> {
         return listOf("東京", "大阪", "札幌", "福岡", "名古屋")
-    }
-
-    /**
-     * 降水強度から温度を推定する（簡易的な実装）
-     */
-    private fun estimateTemperature(cityName: String, rainfall: Double): Int {
-        // 雨量に基づいて温度を簡易的に推定
-        val baseTemp = when (cityName) {
-            "東京" -> 25
-            "大阪" -> 27
-            "札幌" -> 15
-            "福岡" -> 26
-            "名古屋" -> 24
-            else -> 22
-        }
-
-        // 雨が強いほど気温は下がる傾向と仮定
-        return when {
-            rainfall <= 0.0 -> baseTemp + 2
-            rainfall < 1.0 -> baseTemp
-            rainfall < 3.0 -> baseTemp - 1
-            rainfall < 10.0 -> baseTemp - 2
-            else -> baseTemp - 3
-        }
-    }
-
-    /**
-     * 降水強度から湿度を推定する（簡易的な実装）
-     */
-    private fun estimateHumidity(rainfall: Double): Int {
-        // 雨量に基づいて湿度を簡易的に推定
-        return when {
-            rainfall <= 0.0 -> 50
-            rainfall < 1.0 -> 60
-            rainfall < 3.0 -> 70
-            rainfall < 10.0 -> 80
-            else -> 90
-        }.coerceIn(0, 100) // 0〜100の範囲に制限
-    }
-
-    /**
-     * 降水強度から風速を推定する（簡易的な実装）
-     */
-    private fun estimateWindSpeed(rainfall: Double): Double {
-        // 雨量に基づいて風速を簡易的に推定
-        return when {
-            rainfall <= 0.0 -> 2.0
-            rainfall < 1.0 -> 3.0
-            rainfall < 3.0 -> 4.0
-            rainfall < 10.0 -> 5.0
-            else -> 7.0
-        }
     }
 
     /**

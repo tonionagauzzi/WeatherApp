@@ -13,8 +13,7 @@ import java.util.concurrent.TimeUnit
  */
 object NetworkModule {
     private const val GEOCODING_API_BASE_URL = "https://geocoding.geo.census.gov/geocoder/"
-    private const val YAHOO_WEATHER_API_BASE_URL = "https://map.yahooapis.jp/"
-    const val YAHOO_APPLICATION_ID = "dj00aiZpPU5LWDkyckJUcjZUbCZzPWNvbnN1bWVyc2VjcmV0Jng9NGU-"
+    private const val OPEN_METEO_API_BASE_URL = "https://api.open-meteo.com/"
 
     private val moshi: Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
@@ -44,14 +43,14 @@ object NetworkModule {
     }
 
     /**
-     * Yahoo!気象情報APIクライアントを提供する
+     * Open Meteo APIクライアントを提供する
      */
-    val yahooWeatherService: YahooWeatherService by lazy {
+    val openMeteoService: OpenMeteoService by lazy {
         Retrofit.Builder()
-            .baseUrl(YAHOO_WEATHER_API_BASE_URL)
+            .baseUrl(OPEN_METEO_API_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-            .create(YahooWeatherService::class.java)
+            .create(OpenMeteoService::class.java)
     }
 }
