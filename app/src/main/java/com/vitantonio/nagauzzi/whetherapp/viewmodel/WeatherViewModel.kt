@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vitantonio.nagauzzi.whetherapp.model.Weather
 import com.vitantonio.nagauzzi.whetherapp.repository.WeatherRepository
+import com.vitantonio.nagauzzi.whetherapp.repository.WeatherRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,9 +14,9 @@ import kotlinx.coroutines.launch
 /**
  * 天気情報のViewModelクラス
  */
-class WeatherViewModel : ViewModel() {
-    private val repository: WeatherRepository = WeatherRepository()
-
+class WeatherViewModel(
+    private val repository: WeatherRepository = WeatherRepositoryImpl(),
+) : ViewModel() {
     private val _weatherState = MutableStateFlow<WeatherUiState>(WeatherUiState.Loading)
     val weatherState: StateFlow<WeatherUiState> = _weatherState.asStateFlow()
 
