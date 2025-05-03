@@ -176,26 +176,33 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            Text(
+                text = "${weather.temperature}°C",
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Bottom,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "${weather.maxTemperature}°",
-                    style = MaterialTheme.typography.displayMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    text = "最高: ${weather.maxTemperature}°C",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
-                    text = "${weather.minTemperature}°",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Normal,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    text = "最低: ${weather.minTemperature}°C",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium
                 )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -231,13 +238,22 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
                 WeatherDetailItem(
                     emoji = "💧",
                     label = "湿度",
-                    value = "${weather.humidity}%"
+                    value = "${weather.humidity}%",
+                    modifier = Modifier.weight(1f)
                 )
 
                 WeatherDetailItem(
                     emoji = "🌬️",
                     label = "風速",
-                    value = "${weather.windSpeed} m/s"
+                    value = "${weather.windSpeed} m/s",
+                    modifier = Modifier.weight(1f)
+                )
+
+                WeatherDetailItem(
+                    emoji = "🌧️",
+                    label = "雨量",
+                    value = "${weather.rainfall} mm/h",
+                    modifier = Modifier.weight(1f)
                 )
             }
         }
@@ -283,10 +299,11 @@ fun WeatherDetailItem(
 fun WeatherConditionIcon(condition: WeatherCondition, modifier: Modifier = Modifier) {
     val emoji = when (condition) {
         WeatherCondition.SUNNY -> "☀️"
+        WeatherCondition.PARTLY_CLOUDY -> "🌤️"
         WeatherCondition.CLOUDY -> "☁️"
         WeatherCondition.RAINY -> "🌧️"
-        WeatherCondition.SNOWY -> "❄️"
         WeatherCondition.STORMY -> "⚡"
+        WeatherCondition.UNKNOWN -> "？"
     }
 
     Text(
@@ -340,10 +357,11 @@ fun ErrorMessage(message: String, modifier: Modifier = Modifier) {
 fun WeatherCondition.toJapanese(): String {
     return when (this) {
         WeatherCondition.SUNNY -> "晴れ"
+        WeatherCondition.PARTLY_CLOUDY -> "晴れ時々曇り"
         WeatherCondition.CLOUDY -> "曇り"
         WeatherCondition.RAINY -> "雨"
-        WeatherCondition.SNOWY -> "雪"
         WeatherCondition.STORMY -> "嵐"
+        WeatherCondition.UNKNOWN -> "不明"
     }
 }
 
@@ -354,11 +372,13 @@ fun WeatherCardPreview() {
         WeatherCard(
             weather = Weather(
                 city = "東京",
+                temperature = 25,
                 maxTemperature = 28,
                 minTemperature = 21,
                 condition = WeatherCondition.SUNNY,
                 humidity = 60,
-                windSpeed = 3.5
+                windSpeed = 3.5,
+                rainfall = 0.0
             )
         )
     }
