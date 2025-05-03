@@ -29,17 +29,28 @@ enum class WeatherCondition {
 
     companion object {
         /**
-         * Yahoo!気象情報APIの降水強度から天気の状態を判定する
-         * @param rainfall 降水強度（mm/h）
+         * Open MeteoのWMO Weather Codeから天気の状態を判定する
+         * https://open-meteo.com/en/docs 参照
+         * @param weatherCode WMO Weather Code
          * @return 天気の状態
          */
-        fun fromYahooRainfall(rainfall: Double): WeatherCondition {
-            return when {
-                rainfall == 0.0 -> SUNNY
-                rainfall < 1.0 -> PARTLY_CLOUDY
-                rainfall < 3.0 -> CLOUDY
-                rainfall < 20.0 -> RAINY
-                rainfall >= 20.0 -> STORMY
+        fun fromOpenMeteoWeatherCode(weatherCode: Int): WeatherCondition {
+            return when (weatherCode) {
+                0 -> SUNNY // Clear sky
+                1 -> SUNNY // Mainly clear
+                2 -> PARTLY_CLOUDY // Partly cloudy
+                3 -> CLOUDY // Overcast
+                45, 48 -> CLOUDY // Fog and depositing rime fog
+                51, 53, 55 -> RAINY // Drizzle: Light, moderate, and dense intensity
+                56, 57 -> RAINY // Freezing Drizzle: Light and dense intensity
+                61, 63, 65 -> RAINY // Rain: Slight, moderate and heavy intensity
+                66, 67 -> RAINY // Freezing Rain: Light and heavy intensity
+                71, 73, 75 -> RAINY // Snow fall: Slight, moderate, and heavy intensity
+                77 -> RAINY // Snow grains
+                80, 81, 82 -> RAINY // Rain showers: Slight, moderate, and violent
+                85, 86 -> RAINY // Snow showers slight and heavy
+                95 -> STORMY // Thunderstorm: Slight or moderate
+                96, 99 -> STORMY // Thunderstorm with slight and heavy hail
                 else -> UNKNOWN
             }
         }
