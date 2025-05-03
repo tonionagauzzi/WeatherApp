@@ -1,0 +1,13 @@
+[*.{kt,kts}]
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = false
+
+# Composableの場合は大文字始まりを許容
+ktlint_function_naming_ignore_when_annotated_with = Composable
+
+# 代入の際、インデントが深くならないようにする
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_string-template-indent = disabled
+
+# 関数における複数の引数を1行で書くのを許容
+ktlint_standard_function-signature = disabled
