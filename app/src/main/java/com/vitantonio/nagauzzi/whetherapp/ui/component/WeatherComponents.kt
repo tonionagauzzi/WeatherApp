@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -71,9 +72,12 @@ fun WeatherScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         when (weatherState) {
-            is WeatherUiState.Loading -> CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+            is WeatherUiState.Loading -> CircularProgressIndicator(
+                modifier = Modifier.padding(16.dp)
+                    .testTag(tag = "progress_indicator")
+            )
             is WeatherUiState.Success -> WeatherCard(weather = weatherState.weather)
-            is WeatherUiState.Error -> ErrorMessage(message = weatherState.message, onRetry = onRetryFetch)
+            is WeatherUiState.Error -> ErrorMessage(message = weatherState.message)
         }
 
         if (weatherState !is WeatherUiState.Loading) {
@@ -336,7 +340,6 @@ fun WeatherConditionIcon(condition: WeatherCondition, modifier: Modifier = Modif
 @Composable
 fun ErrorMessage(
     message: String,
-    onRetry: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
