@@ -121,6 +121,8 @@ Generate code, corrections, and refactorings that comply with the basic principl
 - Use xml and fragments instead of jetpack compose
 - Use Material 3 for the UI
 - Use ConstraintLayout for layouts
+- Use Version Catalog
+
 ### Testing
 
 - Use the standard widget testing for flutter

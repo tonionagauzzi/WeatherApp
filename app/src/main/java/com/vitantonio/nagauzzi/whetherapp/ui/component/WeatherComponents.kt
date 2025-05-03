@@ -14,6 +14,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -72,6 +74,19 @@ fun WeatherScreen(
             is WeatherUiState.Loading -> CircularProgressIndicator(modifier = Modifier.padding(16.dp))
             is WeatherUiState.Success -> WeatherCard(weather = weatherState.weather)
             is WeatherUiState.Error -> ErrorMessage(message = weatherState.message, onRetry = onRetryFetch)
+        }
+
+        if (weatherState !is WeatherUiState.Loading) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onRetryFetch,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(text = "再取得")
+            }
         }
     }
 }
@@ -353,17 +368,6 @@ fun ErrorMessage(
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center
         )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        androidx.compose.material3.Button(
-            onClick = onRetry,
-            colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
-        ) {
-            Text(text = "再試行")
-        }
     }
 }
 
