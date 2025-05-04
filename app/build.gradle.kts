@@ -55,14 +55,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.moshi.kotlin)
-
-    // Retrofit for API calls
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-
-    // OkHttp for HTTP client
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
 
     // Unit testing
     testImplementation(libs.androidx.compose.ui.test.junit4)
