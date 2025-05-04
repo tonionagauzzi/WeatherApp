@@ -54,7 +54,6 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // ViewModel の依存関係
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Retrofit for API calls
