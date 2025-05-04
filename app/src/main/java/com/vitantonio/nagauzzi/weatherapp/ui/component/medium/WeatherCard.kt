@@ -18,9 +18,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.weatherapp.R
 import com.vitantonio.nagauzzi.weatherapp.model.Weather
 import com.vitantonio.nagauzzi.weatherapp.model.WeatherCondition
 import com.vitantonio.nagauzzi.weatherapp.ui.component.small.WeatherConditionIcon
@@ -77,19 +79,21 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            val context = LocalContext.current
+
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Bottom,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "最高: ${weather.maxTemperature}°C",
+                    text = "${context.getString(R.string.label_max_temp_prefix)}${weather.maxTemperature}°C",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
-                    text = "最低: ${weather.minTemperature}°C",
+                    text = "${context.getString(R.string.label_min_temp_prefix)}${weather.minTemperature}°C",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium
                 )
@@ -102,13 +106,13 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "最高",
+                    text = context.getString(R.string.label_max),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.width(24.dp))
                 Text(
-                    text = "最低",
+                    text = context.getString(R.string.label_min),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -117,7 +121,7 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = weather.condition.toJapanese(),
+                text = weather.condition.toLocalizedString(context),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -130,21 +134,21 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
             ) {
                 WeatherDetailItem(
                     emoji = "💧",
-                    label = "湿度",
+                    label = context.getString(R.string.label_humidity),
                     value = "${weather.humidity}%",
                     modifier = Modifier.weight(1f)
                 )
 
                 WeatherDetailItem(
                     emoji = "🌬️",
-                    label = "風速",
+                    label = context.getString(R.string.label_wind_speed),
                     value = "${weather.windSpeed} m/s",
                     modifier = Modifier.weight(1f)
                 )
 
                 WeatherDetailItem(
                     emoji = "🌧️",
-                    label = "雨量",
+                    label = context.getString(R.string.label_rainfall),
                     value = "${weather.rainfall} mm/h",
                     modifier = Modifier.weight(1f)
                 )
@@ -154,20 +158,20 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
 }
 
 /**
- * 天気の状態を日本語に変換する拡張関数
+ * 天気の状態をローカライズされた文字列に変換する拡張関数
  */
-private fun WeatherCondition.toJapanese(): String {
+private fun WeatherCondition.toLocalizedString(context: android.content.Context): String {
     return when (this) {
-        WeatherCondition.SUNNY -> "晴れ"
-        WeatherCondition.PARTLY_CLOUDY -> "晴れ時々曇り"
-        WeatherCondition.CLOUDY -> "曇り"
-        WeatherCondition.RAINY -> "雨"
-        WeatherCondition.STORMY -> "嵐"
-        WeatherCondition.UNKNOWN -> "不明"
+        WeatherCondition.SUNNY -> context.getString(R.string.label_weather_sunny)
+        WeatherCondition.PARTLY_CLOUDY -> context.getString(R.string.label_weather_partly_cloudy)
+        WeatherCondition.CLOUDY -> context.getString(R.string.label_weather_cloudy)
+        WeatherCondition.RAINY -> context.getString(R.string.label_weather_rainy)
+        WeatherCondition.STORMY -> context.getString(R.string.label_weather_stormy)
+        WeatherCondition.UNKNOWN -> context.getString(R.string.label_weather_unknown)
     }
 }
 
-@Preview(showBackground = true)
+@Preview(locale = "ja", showBackground = true)
 @Composable
 fun WeatherCardPreview() {
     WeatherAppTheme {

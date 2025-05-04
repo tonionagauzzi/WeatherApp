@@ -9,7 +9,9 @@ import com.vitantonio.nagauzzi.weatherapp.ui.theme.WeatherAppTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
+@Config(qualifiers = "ja")
 @RunWith(AndroidJUnit4::class)
 class CitySelectorTest {
     @get:Rule

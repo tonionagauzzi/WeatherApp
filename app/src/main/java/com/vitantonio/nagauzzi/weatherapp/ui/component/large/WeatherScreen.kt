@@ -13,9 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.vitantonio.nagauzzi.weatherapp.R
 import com.vitantonio.nagauzzi.weatherapp.ui.component.medium.CitySelector
 import com.vitantonio.nagauzzi.weatherapp.ui.component.medium.WeatherCard
 import com.vitantonio.nagauzzi.weatherapp.ui.component.small.ErrorMessage
@@ -42,7 +44,7 @@ fun WeatherScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "天気情報",
+            text = LocalContext.current.getString(R.string.label_weather_info),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)

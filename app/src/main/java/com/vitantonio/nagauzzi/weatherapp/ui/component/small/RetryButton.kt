@@ -5,6 +5,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import com.vitantonio.nagauzzi.weatherapp.R
 
 @Composable
 fun RetryButton(onRetry: () -> Unit) {
@@ -14,6 +16,6 @@ fun RetryButton(onRetry: () -> Unit) {
             containerColor = MaterialTheme.colorScheme.primary
         )
     ) {
-        Text(text = "再取得")
+        Text(text = LocalContext.current.getString(R.string.label_retry))
     }
 }

@@ -16,7 +16,9 @@ import com.vitantonio.nagauzzi.weatherapp.viewmodel.WeatherUiState
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
+@Config(qualifiers = "ja")
 @RunWith(AndroidJUnit4::class)
 class WeatherScreenTest {
     @get:Rule
@@ -83,6 +85,7 @@ class WeatherScreenTest {
 
         // 天気情報が表示されることを確認
         composeTestRule.onNodeWithText("25°C").assertIsDisplayed()
+        composeTestRule.onNodeWithText("晴れ").assertIsDisplayed()
 
         // エラーメッセージが表示されないことを確認
         composeTestRule.onNodeWithText("エラーが発生しました").assertIsNotDisplayed()

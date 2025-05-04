@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">天気情報</string>
+
+    <!-- 位置 -->
+    <string name="label_fukuoka">福岡</string>
+    <string name="label_nagoya">名古屋</string>
+    <string name="label_osaka">大阪</string>
+    <string name="label_sapporo">札幌</string>
+    <string name="label_tokyo">東京</string>
+
+    <string name="label_humidity">湿度</string>
+    <string name="label_max">最高</string>
+    <string name="label_max_temp_prefix">"最高: "</string>
+    <string name="label_min">最低</string>
+    <string name="label_min_temp_prefix">"最低: "</string>
+    <string name="label_question_mark">？</string>
+    <string name="label_rainfall">雨量</string>
+    <string name="label_retry">再取得</string>
+    <string name="label_weather_cloudy">曇り</string>
+    <string name="label_weather_info">天気情報</string>
+    <string name="label_weather_partly_cloudy">晴れ時々曇り</string>
+    <string name="label_weather_rainy">雨</string>
+    <string name="label_weather_stormy">嵐</string>
+    <string name="label_weather_sunny">晴れ</string>
+    <string name="label_weather_unknown">不明</string>
+    <string name="label_wind_speed">風速</string>
+
+    <string name="message_error">エラーが発生しました</string>
 </resources>
