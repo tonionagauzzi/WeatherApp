@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.moshi.kotlin)
 
     // Retrofit for API calls
     implementation(libs.retrofit)
@@ -62,12 +63,6 @@ dependencies {
     // OkHttp for HTTP client
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
-
-    // Moshi for JSON parsing
-    implementation(libs.moshi)
-    implementation(libs.moshi.kotlin)
-
-    // Coroutines
 
     // Unit testing
     testImplementation(libs.androidx.compose.ui.test.junit4)
