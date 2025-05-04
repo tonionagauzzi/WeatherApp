@@ -36,3 +36,4 @@ android-application = { id = "com.android.application", version = "8.9.2" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.2.0" }
+screenshot = { id = "com.android.compose.screenshot", version = "0.0.1-alpha09" }
