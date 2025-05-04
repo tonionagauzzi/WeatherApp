@@ -13,6 +13,7 @@ WeatherAppは、日本の主要都市の天気情報をリアルタイムで確�
 
 ## 開発環境
 
+- エディタ: Android Studio
 - 言語: Kotlin
 - 最小SDK: 31 (Android 12)
 - ターゲットSDK: 35
