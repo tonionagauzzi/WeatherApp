@@ -52,9 +52,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.compose.ui.tooling.preview)
-
-    // ViewModel の依存関係
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.kotlinx.coroutines.android)
 
     // Retrofit for API calls
     implementation(libs.retrofit)
@@ -69,8 +68,6 @@ dependencies {
     implementation(libs.moshi.kotlin)
 
     // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
 
     // Unit testing
     testImplementation(libs.androidx.compose.ui.test.junit4)
