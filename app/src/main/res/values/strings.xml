@@ -1,3 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WhetherApp</string>
+    <string name="app_name">WeatherApp</string>
+
+    <!-- Place -->
+    <string name="label_fukuoka">Fukuoka</string>
+    <string name="label_nagoya">Nagoya</string>
+    <string name="label_osaka">Osaka</string>
+    <string name="label_sapporo">Sapporo</string>
+    <string name="label_tokyo">Tokyo</string>
+
+    <string name="label_humidity">Humidity</string>
+    <string name="label_max">Max</string>
+    <string name="label_max_temp_prefix">"Max: "</string>
+    <string name="label_min">Min</string>
+    <string name="label_min_temp_prefix">"Min: "</string>
+    <string name="label_question_mark">\?</string>
+    <string name="label_rainfall">Rainfall</string>
+    <string name="label_retry">Retry</string>
+    <string name="label_weather_cloudy">Cloudy</string>
+    <string name="label_weather_info">Weather Information</string>
+    <string name="label_weather_partly_cloudy">Partly Cloudy</string>
+    <string name="label_weather_rainy">Rainy</string>
+    <string name="label_weather_stormy">Stormy</string>
+    <string name="label_weather_sunny">Sunny</string>
+    <string name="label_weather_unknown">Unknown</string>
+    <string name="label_wind_speed">Wind Speed</string>
+
+    <string name="message_error">An error occurred</string>
 </resources>
