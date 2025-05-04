@@ -25,7 +25,7 @@ jobs:
     - name: Check and test with Gradle
       env:
         TZ: "Asia/Tokyo"
-      run: ./gradlew ktlintCheck testReleaseUnitTest validateScreenshotTest
+      run: ./gradlew ktlintCheck test validateScreenshotTest
 
     - name: Save failed results
       if: failure()
