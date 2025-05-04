@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.vitantonio.nagauzzi.whetherapp"
+    namespace = "com.vitantonio.nagauzzi.weatherapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.vitantonio.nagauzzi.whetherapp"
+        applicationId = "com.vitantonio.nagauzzi.weatherapp"
         minSdk = 31
         targetSdk = 35
         versionCode = 1
