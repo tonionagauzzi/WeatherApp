@@ -46,48 +46,32 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-
-    // ViewModel の依存関係
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    // Retrofit for API calls
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
 
-    // OkHttp for HTTP client
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging)
-
-    // Moshi for JSON parsing
-    implementation(libs.moshi)
-    implementation(libs.moshi.kotlin)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
     // Unit testing
-    implementation(libs.androidx.ui.test.manifest)
-    testImplementation(libs.androidx.ui.test.junit4)
+    testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
 
     // Instrumented testing
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
     // Screenshot testing
-    screenshotTestImplementation(libs.androidx.ui.tooling)
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
     // Debugging
-    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }
