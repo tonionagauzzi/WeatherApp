@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.screenshot)
 }
 
 android {
@@ -32,6 +33,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -73,13 +75,19 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 
+    // Unit testing
+    implementation(libs.androidx.ui.test.manifest)
     testImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
 
+    // Instrumented testing
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
+    // Screenshot testing
+    screenshotTestImplementation(libs.androidx.ui.tooling)
+
+    // Debugging
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }
