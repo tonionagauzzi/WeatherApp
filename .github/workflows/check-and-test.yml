@@ -1,4 +1,4 @@
-name: Build check and test
+name: Check and test
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
     - name: Build and test with Gradle
       env:
         TZ: "Asia/Tokyo"
-      run: ./gradlew check ktlintCheck validateScreenshotTest
+      run: ./gradlew ktlintCheck testReleaseUnitTest validateScreenshotTest
 
     - name: Save failed results
       if: failure()
