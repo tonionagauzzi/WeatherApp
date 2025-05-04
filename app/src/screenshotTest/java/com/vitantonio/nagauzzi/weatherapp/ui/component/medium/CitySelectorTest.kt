@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.vitantonio.nagauzzi.weatherapp.ui.component.medium.CitySelectorPreview
 
 class CitySelectorTest {
-    @Preview(showBackground = true)
+    @Preview(locale = "ja", showBackground = true)
     @Composable
     fun CitySelectorScreenshotTest() = CitySelectorPreview()
 }
