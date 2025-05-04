@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     // Unit testing
+    implementation(libs.androidx.ui.test.manifest)
     testImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
@@ -87,6 +88,6 @@ dependencies {
     // Screenshot testing
     screenshotTestImplementation(libs.androidx.ui.tooling)
 
+    // Debugging
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }
