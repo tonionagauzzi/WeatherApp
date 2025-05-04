@@ -78,9 +78,12 @@ com.vitantonio.nagauzzi.weatherapp/
 
 ### テスト
 
-- JUnitを用いたユニットテスト
-- Robolectricを用いたAndroidテスト
+- JUnit、Robolectric、Compose UI Testを用いたユニットテスト
+  - `./gradlew test`
+- エミュレータまたは実機を使ったテスト
+  - `./gradlew cAT`
 - UIのスクリーンショットテスト
+  - `./gradlew validateScreenshotTest`
 
 ### 将来の展望
 
