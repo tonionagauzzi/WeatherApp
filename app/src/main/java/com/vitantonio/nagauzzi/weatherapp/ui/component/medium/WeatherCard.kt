@@ -171,3 +171,22 @@ fun WeatherCardPreview() {
         )
     }
 }
+
+@Preview(locale = "ja", showBackground = true)
+@Composable
+fun SnowyWeatherCardPreview() {
+    WeatherAppTheme {
+        WeatherCard(
+            weather = Weather(
+                city = "東京",
+                temperature = 2,
+                maxTemperature = 8,
+                minTemperature = -1,
+                condition = WeatherCondition.SNOWY,
+                humidity = 90,
+                windSpeed = 3.5,
+                rainfall = 1.0
+            )
+        )
+    }
+}
