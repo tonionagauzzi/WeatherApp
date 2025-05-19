@@ -21,6 +21,7 @@
     <string name="label_weather_info">Weather Information</string>
     <string name="label_weather_partly_cloudy">Partly Cloudy</string>
     <string name="label_weather_rainy">Rainy</string>
+    <string name="label_weather_snowy">Snowy</string>
     <string name="label_weather_stormy">Stormy</string>
     <string name="label_weather_sunny">Sunny</string>
     <string name="label_weather_unknown">Unknown</string>

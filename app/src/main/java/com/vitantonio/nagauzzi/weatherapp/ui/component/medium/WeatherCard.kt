@@ -148,6 +148,7 @@ private fun WeatherCondition.toLocalizedString(context: android.content.Context)
         WeatherCondition.CLOUDY -> context.getString(R.string.label_weather_cloudy)
         WeatherCondition.RAINY -> context.getString(R.string.label_weather_rainy)
         WeatherCondition.STORMY -> context.getString(R.string.label_weather_stormy)
+        WeatherCondition.SNOWY -> context.getString(R.string.label_weather_snowy)
         WeatherCondition.UNKNOWN -> context.getString(R.string.label_weather_unknown)
     }
 }
@@ -166,6 +167,25 @@ fun WeatherCardPreview() {
                 humidity = 60,
                 windSpeed = 3.5,
                 rainfall = 0.0
+            )
+        )
+    }
+}
+
+@Preview(locale = "ja", showBackground = true)
+@Composable
+fun SnowyWeatherCardPreview() {
+    WeatherAppTheme {
+        WeatherCard(
+            weather = Weather(
+                city = "東京",
+                temperature = 2,
+                maxTemperature = 8,
+                minTemperature = -1,
+                condition = WeatherCondition.SNOWY,
+                humidity = 90,
+                windSpeed = 3.5,
+                rainfall = 1.0
             )
         )
     }
