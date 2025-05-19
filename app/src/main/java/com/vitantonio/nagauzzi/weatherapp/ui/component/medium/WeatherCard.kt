@@ -101,25 +101,6 @@ fun WeatherCard(weather: Weather, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = context.getString(R.string.label_max),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.width(24.dp))
-                Text(
-                    text = context.getString(R.string.label_min),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
             Text(
                 text = weather.condition.toLocalizedString(context),
                 style = MaterialTheme.typography.titleMedium,
