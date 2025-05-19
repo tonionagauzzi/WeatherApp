@@ -19,7 +19,7 @@ fun WeatherConditionIcon(condition: WeatherCondition, modifier: Modifier = Modif
         WeatherCondition.SUNNY -> "☀️"
         WeatherCondition.PARTLY_CLOUDY -> "🌤️"
         WeatherCondition.CLOUDY -> "☁️"
-        WeatherCondition.RAINY -> "🌧️"
+        WeatherCondition.RAINY -> "☔️"
         WeatherCondition.STORMY -> "⚡️"
         else -> context.getString(R.string.label_question_mark) // FIXME: Use UNKNOWN condition instead of else statement
     }
