@@ -148,6 +148,7 @@ private fun WeatherCondition.toLocalizedString(context: android.content.Context)
         WeatherCondition.CLOUDY -> context.getString(R.string.label_weather_cloudy)
         WeatherCondition.RAINY -> context.getString(R.string.label_weather_rainy)
         WeatherCondition.STORMY -> context.getString(R.string.label_weather_stormy)
+        WeatherCondition.SNOWY -> context.getString(R.string.label_weather_snowy)
         WeatherCondition.UNKNOWN -> context.getString(R.string.label_weather_unknown)
     }
 }

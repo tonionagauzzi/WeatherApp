@@ -21,6 +21,7 @@
     <string name="label_weather_info">天気情報</string>
     <string name="label_weather_partly_cloudy">晴れ時々曇り</string>
     <string name="label_weather_rainy">雨</string>
+    <string name="label_weather_snowy">雪</string>
     <string name="label_weather_stormy">嵐</string>
     <string name="label_weather_sunny">晴れ</string>
     <string name="label_weather_unknown">不明</string>

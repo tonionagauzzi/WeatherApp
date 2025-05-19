@@ -24,6 +24,7 @@ enum class WeatherCondition {
     CLOUDY,
     RAINY,
     STORMY,
+    SNOWY,
     UNKNOWN,
     ;
 
@@ -45,10 +46,10 @@ enum class WeatherCondition {
                 56, 57 -> RAINY // Freezing Drizzle: Light and dense intensity
                 61, 63, 65 -> RAINY // Rain: Slight, moderate and heavy intensity
                 66, 67 -> RAINY // Freezing Rain: Light and heavy intensity
-                71, 73, 75 -> RAINY // Snow fall: Slight, moderate, and heavy intensity
-                77 -> RAINY // Snow grains
+                71, 73, 75 -> SNOWY // Snow fall: Slight, moderate, and heavy intensity
+                77 -> SNOWY // Snow grains
                 80, 81, 82 -> RAINY // Rain showers: Slight, moderate, and violent
-                85, 86 -> RAINY // Snow showers slight and heavy
+                85, 86 -> SNOWY // Snow showers slight and heavy
                 95 -> STORMY // Thunderstorm: Slight or moderate
                 96, 99 -> STORMY // Thunderstorm with slight and heavy hail
                 else -> UNKNOWN
