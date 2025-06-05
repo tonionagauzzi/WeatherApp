@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.weatherapp.repository
 
+import com.vitantonio.nagauzzi.weatherapp.model.DailyForecast
 import com.vitantonio.nagauzzi.weatherapp.model.Location
 import com.vitantonio.nagauzzi.weatherapp.model.Weather
 import com.vitantonio.nagauzzi.weatherapp.model.WeatherCondition
@@ -45,6 +46,16 @@ class WeatherRepositoryImpl : WeatherRepository {
         // 天気コードから天気の状態を判定
         val condition = WeatherCondition.fromOpenMeteoWeatherCode(currentWeather.weather_code)
 
+        // 日毎の天気情報を作成
+        val dailyForecasts = dailyWeather.time.mapIndexed { index, date ->
+            DailyForecast(
+                date = date,
+                maxTemperature = dailyWeather.temperature_2m_max[index].roundToInt(),
+                minTemperature = dailyWeather.temperature_2m_min[index].roundToInt(),
+                condition = WeatherCondition.fromOpenMeteoWeatherCode(dailyWeather.weather_code[index])
+            )
+        }
+
         // Weather オブジェクトを作成
         Weather(
             city = cityName,
@@ -54,7 +65,8 @@ class WeatherRepositoryImpl : WeatherRepository {
             condition = condition,
             humidity = currentWeather.relative_humidity_2m,
             windSpeed = currentWeather.wind_speed_10m,
-            rainfall = currentWeather.rain
+            rainfall = currentWeather.rain,
+            dailyForecasts = dailyForecasts
         )
     }
 
@@ -107,7 +119,12 @@ class WeatherRepositoryImpl : WeatherRepository {
                 condition = WeatherCondition.SUNNY,
                 humidity = 60,
                 windSpeed = 3.5,
-                rainfall = 0.0
+                rainfall = 0.0,
+                dailyForecasts = listOf(
+                    DailyForecast("2023-01-01", 28, 21, WeatherCondition.SUNNY),
+                    DailyForecast("2023-01-02", 27, 20, WeatherCondition.PARTLY_CLOUDY),
+                    DailyForecast("2023-01-03", 26, 19, WeatherCondition.CLOUDY),
+                )
             )
 
             "大阪" -> Weather(
@@ -118,7 +135,12 @@ class WeatherRepositoryImpl : WeatherRepository {
                 condition = WeatherCondition.CLOUDY,
                 humidity = 65,
                 windSpeed = 4.0,
-                rainfall = 2.0
+                rainfall = 2.0,
+                dailyForecasts = listOf(
+                    DailyForecast("2023-01-01", 30, 23, WeatherCondition.CLOUDY),
+                    DailyForecast("2023-01-02", 29, 22, WeatherCondition.RAINY),
+                    DailyForecast("2023-01-03", 28, 21, WeatherCondition.STORMY),
+                )
             )
 
             "札幌" -> Weather(
@@ -129,7 +151,12 @@ class WeatherRepositoryImpl : WeatherRepository {
                 condition = WeatherCondition.RAINY,
                 humidity = 80,
                 windSpeed = 5.2,
-                rainfall = 5.5
+                rainfall = 5.5,
+                dailyForecasts = listOf(
+                    DailyForecast("2023-01-01", 18, 12, WeatherCondition.RAINY),
+                    DailyForecast("2023-01-02", 17, 11, WeatherCondition.RAINY),
+                    DailyForecast("2023-01-03", 16, 10, WeatherCondition.PARTLY_CLOUDY),
+                )
             )
 
             "福岡" -> Weather(
@@ -140,7 +167,12 @@ class WeatherRepositoryImpl : WeatherRepository {
                 condition = WeatherCondition.CLOUDY,
                 humidity = 70,
                 windSpeed = 3.0,
-                rainfall = 1.5
+                rainfall = 1.5,
+                dailyForecasts = listOf(
+                    DailyForecast("2023-01-01", 29, 22, WeatherCondition.CLOUDY),
+                    DailyForecast("2023-01-02", 28, 21, WeatherCondition.SUNNY),
+                    DailyForecast("2023-01-03", 27, 20, WeatherCondition.PARTLY_CLOUDY),
+                )
             )
 
             else -> {
@@ -154,7 +186,12 @@ class WeatherRepositoryImpl : WeatherRepository {
                     condition = WeatherCondition.values().random(),
                     humidity = (50..90).random(),
                     windSpeed = (1..7).random() + (0..9).random() / 10.0,
-                    rainfall = rain
+                    rainfall = rain,
+                    dailyForecasts = listOf(
+                        DailyForecast("2023-01-01", temp + 3, temp - 3, WeatherCondition.values().random()),
+                        DailyForecast("2023-01-02", temp + 2, temp - 4, WeatherCondition.values().random()),
+                        DailyForecast("2023-01-03", temp + 1, temp - 5, WeatherCondition.values().random()),
+                    )
                 )
             }
         }

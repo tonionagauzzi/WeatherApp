@@ -21,7 +21,7 @@ interface OpenMeteoService {
     suspend fun getWeather(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
-        @Query("daily") daily: String = "temperature_2m_max,temperature_2m_min",
+        @Query("daily") daily: String = "temperature_2m_max,temperature_2m_min,weathercode",
         @Query("current") current: String = "temperature_2m,weather_code,wind_speed_10m,precipitation,rain,relative_humidity_2m",
         @Query("timezone") timezone: String = "Asia/Tokyo",
     ): OpenMeteoResponse
@@ -72,6 +72,7 @@ data class DailyWeather(
     val time: List<String>,
     val temperature_2m_max: List<Double>,
     val temperature_2m_min: List<Double>,
+    val weather_code: List<Int>,
 )
 
 /**
@@ -80,4 +81,5 @@ data class DailyWeather(
 data class DailyUnits(
     val temperature_2m_max: String,
     val temperature_2m_min: String,
+    val weather_code: String,
 )

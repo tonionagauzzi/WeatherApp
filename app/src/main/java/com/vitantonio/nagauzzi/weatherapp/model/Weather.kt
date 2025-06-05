@@ -3,6 +3,13 @@ package com.vitantonio.nagauzzi.weatherapp.model
 /**
  * 天気情報のデータモデル
  */
+data class DailyForecast(
+    val date: String,
+    val maxTemperature: Int,
+    val minTemperature: Int,
+    val condition: WeatherCondition
+)
+
 data class Weather(
     val city: String,
     val temperature: Int,
@@ -13,6 +20,7 @@ data class Weather(
     val windSpeed: Double,
     val rainfall: Double = 0.0,
     val timestamp: Long = System.currentTimeMillis(),
+    val dailyForecasts: List<DailyForecast>
 )
 
 /**
