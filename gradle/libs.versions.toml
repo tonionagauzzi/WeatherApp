@@ -1,5 +1,5 @@
 [versions]
-compose-ui = "1.8.1"
+compose-ui = "1.8.3"
 kotlin = "2.1.21"
 kotlinx = "1.10.2"
 okhttp = "4.12.0"
