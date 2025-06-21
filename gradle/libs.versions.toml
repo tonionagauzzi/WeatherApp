@@ -22,7 +22,7 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
-robolectric = { group = "org.robolectric", name = "robolectric", version = "4.14.1" }
+robolectric = { group = "org.robolectric", name = "robolectric", version = "4.15.1" }
 
 [plugins]
 android-application = { id = "com.android.application", version = "8.10.0" }
