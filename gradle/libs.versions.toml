@@ -1,6 +1,6 @@
 [versions]
 compose-ui = "1.8.1"
-kotlin = "2.1.21"
+kotlin = "2.2.0"
 kotlinx = "1.10.2"
 okhttp = "4.12.0"
 retrofit = "3.0.0"
