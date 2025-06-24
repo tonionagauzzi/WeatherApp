@@ -9,6 +9,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.vitantonio.nagauzzi.weatherapp.fake.fakeDailyForecasts
 import com.vitantonio.nagauzzi.weatherapp.model.Weather
 import com.vitantonio.nagauzzi.weatherapp.model.WeatherCondition
 import com.vitantonio.nagauzzi.weatherapp.ui.theme.WeatherAppTheme
@@ -68,7 +69,9 @@ class WeatherScreenTest {
                             condition = WeatherCondition.SUNNY,
                             humidity = 60,
                             windSpeed = 3.5,
-                            rainfall = 0.0
+                            rainfall = 0.0,
+                            timestamp = 0L,
+                            dailyForecasts = fakeDailyForecasts
                         )
                     ),
                     selectedCity = "東京",

@@ -1,5 +1,6 @@
 package com.vitantonio.nagauzzi.weatherapp.repository
 
+import com.vitantonio.nagauzzi.weatherapp.fake.fakeDailyForecasts
 import com.vitantonio.nagauzzi.weatherapp.model.Weather
 import com.vitantonio.nagauzzi.weatherapp.model.WeatherCondition
 
@@ -30,7 +31,9 @@ class MockWeatherRepository(var shouldReturnError: Boolean = false) : WeatherRep
                     minTemperature = 21,
                     condition = WeatherCondition.SUNNY,
                     humidity = 60,
-                    windSpeed = 3.5
+                    windSpeed = 3.5,
+                    timestamp = 0L,
+                    dailyForecasts = fakeDailyForecasts
                 )
 
                 "大阪" -> Weather(
@@ -40,7 +43,9 @@ class MockWeatherRepository(var shouldReturnError: Boolean = false) : WeatherRep
                     minTemperature = 23,
                     condition = WeatherCondition.CLOUDY,
                     humidity = 65,
-                    windSpeed = 4.0
+                    windSpeed = 4.0,
+                    timestamp = 0L,
+                    dailyForecasts = fakeDailyForecasts
                 )
 
                 else -> Weather(
@@ -50,7 +55,9 @@ class MockWeatherRepository(var shouldReturnError: Boolean = false) : WeatherRep
                     minTemperature = 15,
                     condition = WeatherCondition.PARTLY_CLOUDY,
                     humidity = 70,
-                    windSpeed = 2.5
+                    windSpeed = 2.5,
+                    timestamp = 0L,
+                    dailyForecasts = fakeDailyForecasts
                 )
             }
         )

@@ -24,6 +24,7 @@
     <string name="label_weather_stormy">Stormy</string>
     <string name="label_weather_sunny">Sunny</string>
     <string name="label_weather_unknown">Unknown</string>
+    <string name="label_weekly_forecast">Weekly Forecast</string>
     <string name="label_wind_speed">Wind Speed</string>
 
     <string name="message_error">An error occurred</string>

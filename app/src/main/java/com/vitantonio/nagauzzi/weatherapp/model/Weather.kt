@@ -7,7 +7,7 @@ data class DailyForecast(
     val date: String,
     val maxTemperature: Int,
     val minTemperature: Int,
-    val condition: WeatherCondition
+    val condition: WeatherCondition,
 )
 
 data class Weather(
@@ -20,7 +20,7 @@ data class Weather(
     val windSpeed: Double,
     val rainfall: Double = 0.0,
     val timestamp: Long = System.currentTimeMillis(),
-    val dailyForecasts: List<DailyForecast>
+    val dailyForecasts: List<DailyForecast>,
 )
 
 /**

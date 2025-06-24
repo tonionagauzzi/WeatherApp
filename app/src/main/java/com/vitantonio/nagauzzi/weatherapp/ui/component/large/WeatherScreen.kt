@@ -1,80 +1,29 @@
 package com.vitantonio.nagauzzi.weatherapp.ui.component.large
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cloud
-import androidx.compose.material.icons.filled.Thermostat
-import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.vitantonio.nagauzzi.weatherapp.R
-import com.vitantonio.nagauzzi.weatherapp.model.DailyForecast
-import com.vitantonio.nagauzzi.weatherapp.model.WeatherCondition
 import com.vitantonio.nagauzzi.weatherapp.ui.component.medium.CitySelector
+import com.vitantonio.nagauzzi.weatherapp.ui.component.medium.DailyForecastRow
 import com.vitantonio.nagauzzi.weatherapp.ui.component.medium.WeatherCard
 import com.vitantonio.nagauzzi.weatherapp.ui.component.small.ErrorMessage
 import com.vitantonio.nagauzzi.weatherapp.ui.component.small.RetryButton
 import com.vitantonio.nagauzzi.weatherapp.viewmodel.WeatherUiState
-
-/**
- * 天気情報を表示するメイン画面
- */
-@Composable
-fun DailyForecastRow(forecast: DailyForecast, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = forecast.date,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        WeatherConditionIcon(condition = forecast.condition)
-        Text(
-            text = "${forecast.maxTemperature}°C / ${forecast.minTemperature}°C",
-            style = MaterialTheme.typography.bodyMedium
-        )
-    }
-}
-
-/**
- * 天気状態に応じたアイコンを表示するComposable
- */
-@Composable
-fun WeatherConditionIcon(condition: WeatherCondition, modifier: Modifier = Modifier) {
-    val icon: ImageVector = when (condition) {
-        WeatherCondition.SUNNY -> Icons.Filled.WbSunny
-        WeatherCondition.CLOUDY, WeatherCondition.PARTLY_CLOUDY -> Icons.Filled.Cloud
-        else -> Icons.Filled.Thermostat // Default or for other conditions like RAINY, STORMY
-    }
-    Icon(
-        imageVector = icon,
-        contentDescription = condition.name, // Accessibility
-        modifier = modifier.size(24.dp)
-    )
-}
 
 /**
  * 天気情報を表示するメイン画面
