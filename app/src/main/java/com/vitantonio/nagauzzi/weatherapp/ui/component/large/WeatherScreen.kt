@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,8 +39,7 @@ fun WeatherScreen(
     Column(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -62,7 +61,13 @@ fun WeatherScreen(
             is WeatherUiState.Loading -> CircularProgressIndicator(
                 modifier = Modifier.padding(16.dp).testTag(tag = "progress_indicator")
             )
-            is WeatherUiState.Success -> WeatherCard(weather = weatherState.weather)
+            is WeatherUiState.Success -> {
+                LazyRow(modifier = Modifier.testTag(tag = "weather_card_list")) {
+                    items(items = listOf(weatherState.weather)) { weather ->
+                        WeatherCard(weather = weather)
+                    }
+                }
+            }
             is WeatherUiState.Error -> ErrorMessage(message = weatherState.message)
         }
 

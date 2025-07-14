@@ -60,6 +60,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
 
+    // TODO: Add the AI coding agent SDK here
+
     // Unit testing
     testImplementation(libs.androidx.compose.ui.test.junit4)
     testImplementation(libs.kotlinx.coroutines.test)
